@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "runtime": {
+        "version": "Lua 5.4"
+    },
+    "diagnostics": {
+        "globals": ["playdate"]
+    },
+    "workspace": {
+        "library": [
+            "/Users/zane.littrell/Developer/PlaydateSDK",
+            "/Users/zane.littrell/Developer/PlaydateSDK/CoreLibs"
+        ]
+    },
+    "runtime": {
+        "builtin": {
+            "io": "disable",
+            "os": "disable",
+            "package": "disable"
+        },
+        "nonstandardSymbol": [
+            "+=",
+            "-=",
+            "*=",
+            "/=",
+            "//=",
+            "%=",
+            "<<=",
+            ">>=",
+            "&=",
+            "|=",
+            "^="
+        ],
+        "special": {
+            "import": "require"
+        }
+    }
+}
