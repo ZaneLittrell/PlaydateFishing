@@ -6,8 +6,12 @@ import "CoreLibs/sprites"
 
 -- Wave animation speed
 local WAVE_SPEED <const> = 200
+-- The full tag value
+local FULL_TAG <const> = 0xFF
 -- Tag for the background sprite
-local BACKGROUND_TAG <const> = 255
+local BACKGROUND_TAG <const> = 0xFF
+-- Tag for the fish moving in the positive x direction
+local FISH_FORWARD_TAG <const> = 0x8
 
 -- Playdate graphics object
 local gfx <const> = playdate.graphics
@@ -44,10 +48,34 @@ local function loadImagetable(tablePath)
     return table
 end
 
+-- Fish update method
+local function fishUpdate(self)
+    -- TODO turn this into a closure that works with different boundaries as parameters
+    if self.x > 200 then
+        -- Unset fish forward tag
+        self:setTag(self:getTag() & (FULL_TAG ~ FISH_FORWARD_TAG))
+        print("Flipping around (back)")
+    elseif self.x < 100 then
+        -- Set fish forward tag
+        self:setTag(self:getTag() | FISH_FORWARD_TAG)
+        print("Flipping around (forward)")
+    end
+
+    -- Check if the forward tag is set
+    if (self:getTag() & FISH_FORWARD_TAG) ~= 0 then
+        self:moveTo(self.x + 1, self.y)
+        print("Moving forward")
+    else
+        self:moveTo(self.x - 1, self.y)
+        print("Moving back")
+    end
+end
+
 -- Create a fish sprite
 local function fishSprite(fishImage, x, y)
     local sprite = playdate.graphics.sprite.new(fishImage)
     sprite:moveTo(x, y)
+    sprite.update = fishUpdate
     return sprite
 end
 
