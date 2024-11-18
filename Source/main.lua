@@ -1,10 +1,13 @@
 import "CoreLibs/animation"
 import "CoreLibs/graphics"
+import "CoreLibs/sprites"
 
 --#region Local variables
 
 -- Wave animation speed
 local WAVE_SPEED <const> = 200
+-- Tag for the background sprite
+local BACKGROUND_TAG <const> = 255
 
 -- Playdate graphics object
 local gfx <const> = playdate.graphics
@@ -41,6 +44,12 @@ local function loadImagetable(tablePath)
     return table
 end
 
+-- Create a fish sprite
+local function fishSprite(fishImage, x, y)
+    local sprite = playdate.graphics.sprite.new(fishImage)
+    sprite:moveTo(x, y)
+    return sprite
+end
 
 --#endregion Util functions
 
@@ -55,9 +64,25 @@ local function init()
     -- Load wave animation
     local waveTable = loadImagetable("fullWave")
     waveAnim = gfx.animation.loop.new(WAVE_SPEED, waveTable, true)
+    -- Draw wave in the background
+    gfx.sprite.setBackgroundDrawingCallback(
+        function(x, y, width, height)
+            -- x,y,width,height is the updated area in sprite-local coordinates
+            -- The clip rect is already set to this area, so we don't need to set it ourselves
+            waveAnim:draw(0, 0)
+        end
+    )
+    -- Tag background sprite since it's the only one that exists yet
+    gfx.sprite.performOnAllSprites(
+        function (sprite)
+            sprite:setTag(BACKGROUND_TAG)
+        end
+    )
 
     -- Load fish image
     fishImg = loadImage("fish")
+    local sprite = fishSprite(fishImg, 120, 20)
+    sprite:add()
 end
 
 --#endregion Local functions
@@ -65,16 +90,35 @@ end
 --#region Playdate overrides
 
 ---@diagnostic disable-next-line: duplicate-set-field
+function playdate.AButtonDown()
+    -- Show all sprites
+    gfx.sprite.performOnAllSprites(
+        function (sprite)
+            sprite:setVisible(true)
+        end
+    )
+end
+
+---@diagnostic disable-next-line: duplicate-set-field
+function playdate.BButtonDown()
+    -- Hide all sprites besides background
+    gfx.sprite.performOnAllSprites(
+        function (sprite)
+            if sprite:getTag() ~= BACKGROUND_TAG then
+                sprite:setVisible(false)
+            end
+        end
+    )
+end
+
+---@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
     local dt = 1/20
     elapsedTime = elapsedTime + dt
 
-    if waveAnim ~= nil then
-        waveAnim:draw(0, 0)
-    end
-    if fishImg ~= nil then
-        fishImg:draw(120, 20)
-    end
+    gfx.sprite.update()
+    -- Always redraw background since it's animated
+    gfx.sprite.redrawBackground()
 end
 
 --#endregion Playdate overrides
