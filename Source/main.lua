@@ -3,35 +3,61 @@ import "CoreLibs/graphics"
 
 --#region Local variables
 
-local WAVE_HALF_AMPLITUDE <const> = 25
-local WAVE_PERIOD <const> = 70
+-- Wave animation speed
+local WAVE_SPEED <const> = 200
 
+-- Playdate graphics object
 local gfx <const> = playdate.graphics
+-- Foreground color
 local fgColor <const> = gfx.kColorBlack
+-- Background color
 local bgColor <const> = gfx.kColorWhite
+-- Seconds elapsed since the game started
 local elapsedTime = 0
-local wavePhase = 0
-local waveAnim
+-- Wave animation object
+local waveAnim = nil
+-- Fish image
+local fishImg = nil
 
 --#endregion Local variables
+
+--#region Util functions
+
+-- Load an image and handle any errors
+local function loadImage(imgPath)
+    local img, err = gfx.image.new(imgPath)
+    if table == nil then
+        error(err)
+    end
+    return img
+end
+
+-- Load an imagetable and handle any errors
+local function loadImagetable(tablePath)
+    local table, err = gfx.imagetable.new(tablePath)
+    if table == nil then
+        error(err)
+    end
+    return table
+end
+
+
+--#endregion Util functions
 
 --#region Local functions
 
 -- Initialization function
 local function init()
+    -- Set colors
     gfx.setColor(fgColor)
     gfx.setBackgroundColor(bgColor)
-    local table, err = gfx.imagetable.new("wave")
-    if table == nil then
-        error(err)
-    else
-        waveAnim = gfx.animation.loop.new(400, table, true)
-    end
-end
 
--- Draw a wave on the beach
-local function drawWave()
-    gfx.drawSineWave(0, 100, 400, 100, WAVE_HALF_AMPLITUDE, WAVE_HALF_AMPLITUDE, WAVE_PERIOD, wavePhase)
+    -- Load wave animation
+    local waveTable = loadImagetable("fullWave")
+    waveAnim = gfx.animation.loop.new(WAVE_SPEED, waveTable, true)
+
+    -- Load fish image
+    fishImg = loadImage("fish")
 end
 
 --#endregion Local functions
@@ -39,53 +65,16 @@ end
 --#region Playdate overrides
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function playdate.leftButtonDown()
-    print("Left pressed")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.rightButtonDown()
-    print("Right pressed")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.upButtonDown()
-    print("Up pressed")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.downButtonDown()
-    wavePhase = 50
-    print("Down pressed")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.leftButtonUp()
-    print("Left released")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.rightButtonUp()
-    print("Right released")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.upButtonUp()
-    print("Up released")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.downButtonUp()
-    wavePhase = 0
-    print("Down released")
-end
-
----@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
     local dt = 1/20
     elapsedTime = elapsedTime + dt
 
-    waveAnim:draw(0, 0)
+    if waveAnim ~= nil then
+        waveAnim:draw(0, 0)
+    end
+    if fishImg ~= nil then
+        fishImg:draw(120, 20)
+    end
 end
 
 --#endregion Playdate overrides
