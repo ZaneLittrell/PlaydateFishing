@@ -49,33 +49,30 @@ local function loadImagetable(tablePath)
 end
 
 -- Fish update method
-local function fishUpdate(self)
-    -- TODO turn this into a closure that works with different boundaries as parameters
-    if self.x > 200 then
-        -- Unset fish forward tag
-        self:setTag(self:getTag() & (FULL_TAG ~ FISH_FORWARD_TAG))
-        print("Flipping around (back)")
-    elseif self.x < 100 then
-        -- Set fish forward tag
-        self:setTag(self:getTag() | FISH_FORWARD_TAG)
-        print("Flipping around (forward)")
-    end
+local function fishUpdate(leftBound, rightBound, speed)
+    return function(self)
+        if self.x > rightBound then
+            -- Unset fish forward tag
+            self:setTag(self:getTag() & (FULL_TAG ~ FISH_FORWARD_TAG))
+        elseif self.x < leftBound then
+            -- Set fish forward tag
+            self:setTag(self:getTag() | FISH_FORWARD_TAG)
+        end
 
-    -- Check if the forward tag is set
-    if (self:getTag() & FISH_FORWARD_TAG) ~= 0 then
-        self:moveTo(self.x + 1, self.y)
-        print("Moving forward")
-    else
-        self:moveTo(self.x - 1, self.y)
-        print("Moving back")
+        -- Check if the forward tag is set
+        if (self:getTag() & FISH_FORWARD_TAG) ~= 0 then
+            self:moveTo(self.x + (1 * speed), self.y)
+        else
+            self:moveTo(self.x - (1 * speed), self.y)
+        end
     end
 end
 
 -- Create a fish sprite
-local function fishSprite(fishImage, x, y)
+local function fishSprite(fishImage, x, y, leftBound, rightBound, speed)
     local sprite = playdate.graphics.sprite.new(fishImage)
     sprite:moveTo(x, y)
-    sprite.update = fishUpdate
+    sprite.update = fishUpdate(leftBound, rightBound, speed)
     return sprite
 end
 
@@ -109,8 +106,14 @@ local function init()
 
     -- Load fish image
     fishImg = loadImage("fish")
-    local sprite = fishSprite(fishImg, 120, 20)
-    sprite:add()
+    for i = 1, 3, 1 do
+        local x = math.random(80, 320)
+        local leftBound = math.random(50, 120)
+        local rightBound = math.random(200, 350)
+        local speed = math.random(25, 100) / 100
+        local sprite = fishSprite(fishImg, x, i * 20, leftBound, rightBound, speed)
+        sprite:add()
+    end
 end
 
 --#endregion Local functions
