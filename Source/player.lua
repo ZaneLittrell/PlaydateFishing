@@ -2,20 +2,21 @@ import "CoreLibs/sprites"
 
 -- Logic to execute when the player sprite is updated
 local function playerUpdate(self)
-    local dx = 0
-    local dy = 0
+    local goalX, goalY = self.x, self.y
 
     if playdate.buttonIsPressed(playdate.kButtonUp) then
-        dy -= 1
+        goalY -= 1
     elseif playdate.buttonIsPressed(playdate.kButtonDown) then
-        dy += 1
+        goalY += 1
     end
     if playdate.buttonIsPressed(playdate.kButtonLeft) then
-        dx -= 1
+        goalX -= 1
     elseif playdate.buttonIsPressed(playdate.kButtonRight) then
-        dx += 1
+        goalX += 1
     end
-    self:moveBy(dx, dy)
+
+    -- TODO handle collisions
+    self:moveWithCollisions(goalX, goalY)
 end
 
 -- Create the player sprite, There should only be one created
@@ -23,6 +24,8 @@ local function playerSprite(playerImage, x, y)
     local sprite = playdate.graphics.sprite.new(playerImage)
     sprite:moveTo(x, y)
     sprite.update = playerUpdate
+    -- TODO tweak rectangle to match visible player size
+    sprite:setCollideRect(0, 0, sprite:getSize())
     return sprite
 end
 

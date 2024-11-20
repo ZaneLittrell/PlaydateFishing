@@ -1,6 +1,6 @@
 .PHONY: clean
 
-Fishing.pdx: Source/*
+Fishing.pdx: Source/*.lua Source/Images/*.png
 	pdc Source Fishing.pdx
 
 clean:

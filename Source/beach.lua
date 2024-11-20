@@ -34,6 +34,9 @@ local function beachSprite(imgTable)
     )
     waveAnim.repeats = true
 
+    -- Make collision box to keep the player out of the water
+    sprite:setCollideRect(0, 0, 400, 120)
+
     return sprite
 end
 
