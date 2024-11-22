@@ -14,11 +14,14 @@ local function loadAssets()
     local waveTable = util.loadImagetable("Images/fullWave")
     local fishImage = util.loadImage("Images/fish")
     local playerImage = util.loadImage("Images/player")
+    local castTable = util.loadImagetable("Images/cast")
+    print(castTable:getSize())
 
     return {
         waveTable = waveTable,
         fishImage = fishImage,
-        playerImage = playerImage
+        playerImage = playerImage,
+        castTable = castTable
     }
 end
 
@@ -49,7 +52,12 @@ end
 
 -- Make and add player sprite
 local function initPlayer(assets)
-    local playerSprite = player.playerSprite(assets.playerImage, 192, 200)
+    local playerSprite = player.playerSprite(
+        assets.playerImage,
+        192,
+        200,
+        assets.castTable
+    )
     playerSprite:add()
 end
 

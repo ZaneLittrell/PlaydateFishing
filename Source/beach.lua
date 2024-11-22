@@ -3,7 +3,7 @@ import "CoreLibs/timer"
 
 -- Tag for the background sprite
 local BACKGROUND_TAG <const> = 0xFF
--- Length of each slide in milliseconds
+-- Length of each frame in milliseconds
 local WAVE_SPEED <const> = 200
 -- Wave animation timer
 local waveAnim = nil
