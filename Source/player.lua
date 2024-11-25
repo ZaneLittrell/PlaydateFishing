@@ -1,5 +1,7 @@
 import "CoreLibs/sprites"
 
+local hookLib = import "hook"
+
 -- Length of each frame in milliseconds
 local CAST_SPEED <const> = 200
 
@@ -29,6 +31,8 @@ local function playerUpdate(playerImage, castTable)
             -- Add the rest of the line that's been cast
             castAnim.timerEndedCallback = function ()
                 print('Adding hook sprite')
+                local hookImage = hookLib.drawHook(40, math.pi / 4)
+                hook:setImage(hookImage)
                 hook:moveTo(self.x, self.y - 64)
                 hook:add()
                 castAnim = nil
@@ -61,8 +65,8 @@ local function playerUpdate(playerImage, castTable)
 end
 
 -- Create the player sprite, There should only be one created
-local function playerSprite(playerImage, x, y, castTable, hookSprite)
-    hook = hookSprite
+local function playerSprite(playerImage, x, y, castTable)
+    hook = hookLib.hookSprite(nil, nil)
     local sprite = playdate.graphics.sprite.new(playerImage)
     sprite:moveTo(x, y)
     sprite.update = playerUpdate(playerImage, castTable)

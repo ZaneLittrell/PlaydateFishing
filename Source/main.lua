@@ -1,11 +1,7 @@
 local beach = import "beach"
 local fish = import "fish"
-local hook = import "hook"
 local player = import "player"
 local util = import "util"
-
--- Tag for the background sprite
-local BACKGROUND_TAG <const> = 0xFF
 
 -- Playdate sprite object
 local pSprite <const> = playdate.graphics.sprite
@@ -56,13 +52,11 @@ end
 
 -- Make and add player sprite
 local function initPlayer(assets)
-    local hookSprite = hook.hookSprite(assets.lineImage, assets.lineMask)
     local playerSprite = player.playerSprite(
         assets.playerImage,
         192,
         200,
-        assets.castTable,
-        hookSprite
+        assets.castTable
     )
     playerSprite:add()
 end
