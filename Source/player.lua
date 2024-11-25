@@ -17,7 +17,7 @@ local function playerUpdate(playerImage, castTable)
 
             local timerDuration = math.floor(CAST_SPEED * #castTable)
             -- Make value timer where the value is the frame of the image table
-            castAnim = playdate.timer.new(timerDuration, 1, #castTable)
+            castAnim = playdate.timer.new(timerDuration, 1, #castTable + 1)
             -- Animate each frame from the table
             castAnim.updateCallback = function(timer)
                 local nextFrame = math.floor(timer.value)
