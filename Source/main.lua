@@ -17,13 +17,15 @@ local function loadAssets()
     local playerImage = util.loadImage("Images/player")
     local castTable = util.loadImagetable("Images/cast")
     local lineImage = util.loadImage("Images/line")
+    local lineMask = util.loadImage("Images/line-mask")
 
     return {
         waveTable = waveTable,
         fishImage = fishImage,
         playerImage = playerImage,
         castTable = castTable,
-        lineImage = lineImage
+        lineImage = lineImage,
+        lineMask = lineMask
     }
 end
 
@@ -54,7 +56,7 @@ end
 
 -- Make and add player sprite
 local function initPlayer(assets)
-    local hookSprite = hook.hookSprite(assets.lineImage)
+    local hookSprite = hook.hookSprite(assets.lineImage, assets.lineMask)
     local playerSprite = player.playerSprite(
         assets.playerImage,
         192,
