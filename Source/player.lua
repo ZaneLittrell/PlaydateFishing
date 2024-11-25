@@ -3,6 +3,9 @@ import "CoreLibs/sprites"
 -- Length of each frame in milliseconds
 local CAST_SPEED <const> = 200
 
+-- Sprite for the hook that the player casts
+local hook;
+
 -- Logic to execute when the player sprite is updated
 local function playerUpdate(playerImage, castTable)
     local castAnim = nil
@@ -23,11 +26,20 @@ local function playerUpdate(playerImage, castTable)
                 local nextFrame = math.floor(timer.value)
                 self:setImage(castTable:getImage(nextFrame))
             end
-            -- Switch back to idle player image
+            -- Add the rest of the line that's been cast
             castAnim.timerEndedCallback = function ()
-                self:setImage(playerImage)
+                print('Adding hook sprite')
+                hook:moveTo(self.x, self.y - 64)
+                hook:add()
                 castAnim = nil
             end
+        end
+
+        if playdate.buttonIsPressed(playdate.kButtonB) then
+            -- Remove the hook
+            hook:remove()
+            -- Switch back to idle player image
+            self:setImage(playerImage)
         end
 
         -- Move the player
@@ -49,7 +61,8 @@ local function playerUpdate(playerImage, castTable)
 end
 
 -- Create the player sprite, There should only be one created
-local function playerSprite(playerImage, x, y, castTable)
+local function playerSprite(playerImage, x, y, castTable, hookSprite)
+    hook = hookSprite
     local sprite = playdate.graphics.sprite.new(playerImage)
     sprite:moveTo(x, y)
     sprite.update = playerUpdate(playerImage, castTable)

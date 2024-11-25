@@ -1,5 +1,6 @@
 local beach = import "beach"
 local fish = import "fish"
+local hook = import "hook"
 local player = import "player"
 local util = import "util"
 
@@ -15,13 +16,14 @@ local function loadAssets()
     local fishImage = util.loadImage("Images/fish")
     local playerImage = util.loadImage("Images/player")
     local castTable = util.loadImagetable("Images/cast")
-    print(castTable:getSize())
+    local lineImage = util.loadImage("Images/line")
 
     return {
         waveTable = waveTable,
         fishImage = fishImage,
         playerImage = playerImage,
-        castTable = castTable
+        castTable = castTable,
+        lineImage = lineImage
     }
 end
 
@@ -52,11 +54,13 @@ end
 
 -- Make and add player sprite
 local function initPlayer(assets)
+    local hookSprite = hook.hookSprite(assets.lineImage)
     local playerSprite = player.playerSprite(
         assets.playerImage,
         192,
         200,
-        assets.castTable
+        assets.castTable,
+        hookSprite
     )
     playerSprite:add()
 end
@@ -70,28 +74,6 @@ local function init()
 end
 
 --#region Playdate overrides
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.AButtonDown()
-    -- Show all sprites
-    pSprite.performOnAllSprites(
-        function (sprite)
-            sprite:setVisible(true)
-        end
-    )
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-function playdate.BButtonDown()
-    -- Hide all sprites besides background
-    pSprite.performOnAllSprites(
-        function (sprite)
-            if sprite:getTag() ~= BACKGROUND_TAG then
-                sprite:setVisible(false)
-            end
-        end
-    )
-end
 
 ---@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
