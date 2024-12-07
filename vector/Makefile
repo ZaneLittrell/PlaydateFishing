@@ -1,17 +1,16 @@
-.PHONY: clean
 .PHONY: all 
-.PHONY: all-big
+.PHONY: clean
+.PHONY: idle
 
-all: player.png
+idle-slides = player-idle-1.png player-idle-2.png
+all-images = player.png $(idle-slides)
 
-all-big: player-big.png
+all: $(all-images)
 
-player-big.png: player.mvg
-	magick mvg:player.mvg -scale 800% player-big.png
-
-player.png: player.mvg
-	magick mvg:player.mvg player.png
+idle: $(idle-slides)
 
 clean:
-	rm -f player.png
-	rm -f player-big.png
+	rm -f $(all-images)
+
+$(all-images): %.png: %.mvg
+	magick mvg:$< $@

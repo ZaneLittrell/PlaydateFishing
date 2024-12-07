@@ -1,0 +1,28 @@
+push graphic-context
+    viewbox 0 0 64 64
+    fill 'white'
+    stroke 'black'
+    stroke-antialias 0
+    push graphic-context
+        # Legs
+        path 'M 24,40 v 8'
+        path 'M 40,40 v 8'
+        # Feet
+        fill 'black'
+        path 'M 24,48 a 3 2 0 0 0 4,0 a 3 2 0 0 0 -4,0 Z'
+        path 'M 40,48 a 3 2 0 0 0 -4,0 a 3 2 0 0 0 4,0 Z'
+    pop graphic-context
+    push graphic-context
+        # Body
+        path 'M 16,40 L 32,8 L 48,40 c -2,4 -30,4 -32,0 Z'
+    pop graphic-context
+    push graphic-context
+        # Eye/face
+        path 'M 29,24 c 2,3 4,3 6,0'
+    pop graphic-context
+    push graphic-context
+        # Arms
+        path 'M 26,30 l -2,6'
+        path 'M 38,30 l 2,6'
+    pop graphic-context
+pop graphic-context
