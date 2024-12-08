@@ -1,0 +1,15 @@
+push graphic-context
+    viewbox 0 0 400 240
+    fill 'white'
+    stroke 'black'
+    stroke-antialias 0
+    push graphic-context
+        # Wave on beach
+        fill 'black'
+        path 'M 0,150 q 6,-8 20,0 
+            t 20,0 t 20,0 t 20,0 t 20,0 t 20,0 t 20,0 
+            t 20,0 t 20,0 t 20,0 t 20,0 t 20,0 t 20,0
+            t 20,0 t 20,0 t 20,0 t 20,0 t 20,0 t 20,0
+            t 19,0 V 240 H 0 Z'
+    pop graphic-context
+pop graphic-context

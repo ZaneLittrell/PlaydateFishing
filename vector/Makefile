@@ -3,7 +3,7 @@
 .PHONY: idle
 
 idle-slides = player-idle-1.png player-idle-2.png
-all-images = player.png $(idle-slides)
+all-images = player.png beach.png $(idle-slides)
 
 all: $(all-images)
 
