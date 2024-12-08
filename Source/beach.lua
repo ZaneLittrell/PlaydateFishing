@@ -8,7 +8,7 @@ local WAVE_SPEED <const> = 600
 -- Wave animation timer
 local waveAnim = nil
 -- Current slide of the wave animation
-local nextSlide = 1
+local nextSlide = 0
 
 -- Create the sprite for the beach background
 local function beachSprite(imgTable)
@@ -27,15 +27,15 @@ local function beachSprite(imgTable)
     -- an animation and always redrawing the sprite.
     waveAnim = playdate.timer.new(WAVE_SPEED,
         function()
-            -- First image is at index 1 not 0
-            nextSlide = math.max((nextSlide + 1) % #imgTable, 1)
-            sprite:setImage(imgTable:getImage(nextSlide))
+            nextSlide = (nextSlide + 1) % #imgTable
+            -- Image index is 1-based rather than 0-based
+            sprite:setImage(imgTable:getImage(nextSlide + 1))
         end
     )
     waveAnim.repeats = true
 
     -- Make collision box to keep the player out of the water
-    sprite:setCollideRect(0, 130, 400, 110)
+    sprite:setCollideRect(0, 125, 400, 110)
 
     return sprite
 end

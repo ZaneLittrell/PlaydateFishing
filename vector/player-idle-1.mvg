@@ -5,24 +5,24 @@ push graphic-context
     stroke-antialias 0
     push graphic-context
         # Legs
-        path 'M 24,40 v 8'
-        path 'M 40,40 v 8'
+        path 'M 22,51 v 10'
+        path 'M 42,51 v 10'
         # Feet
         fill 'black'
-        path 'M 24,48 a 3 2 0 0 0 4,0 a 3 2 0 0 0 -4,0 Z'
-        path 'M 40,48 a 3 2 0 0 0 -4,0 a 3 2 0 0 0 4,0 Z'
+        path 'M 22,61 a 3 2 0 0 0 6,0 a 3 2 0 0 0 -6,0 Z'
+        path 'M 42,61 a 3 2 0 0 0 -6,0 a 3 2 0 0 0 6,0 Z'
     pop graphic-context
     push graphic-context
         # Body
-        path 'M 16,40 L 32,8 L 48,40 c -2,4 -30,4 -32,0 Z'
+        path 'M 10,47 L 32,0 l 22,47 c -6,4 -38,4 -44,0 Z'
     pop graphic-context
     push graphic-context
         # Eye/face
-        path 'M 29,24 c 2,3 4,3 6,0'
+        path 'M 26,24 c 4,3 8,3 12,0'
     pop graphic-context
     push graphic-context
         # Arms
-        path 'M 26,30 l -2,6'
-        path 'M 38,30 l 2,6'
+        path 'M 24,32 l -4,12'
+        path 'M 40,32 l 4,12'
     pop graphic-context
 pop graphic-context
