@@ -9,6 +9,9 @@ all: $(all-images)
 
 idle: $(idle-slides)
 
+player-idle-table-64-64.png: $(idle-slides)
+	montage -mode concatenate $(idle-slides) player-idle-table-64-64.png
+
 clean:
 	rm -f $(all-images)
 
