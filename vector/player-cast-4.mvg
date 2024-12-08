@@ -1,0 +1,34 @@
+push graphic-context
+    viewbox 0 0 64 64
+    fill 'white'
+    stroke 'black'
+    stroke-antialias 0
+    push graphic-context
+        # Legs
+        path 'M 22,51 v 10'
+        path 'M 42,51 v 10'
+        # Feet
+        fill 'black'
+        path 'M 22,61 a 3 2 0 0 0 6,0 a 3 2 0 0 0 -6,0 Z'
+        path 'M 42,61 a 3 2 0 0 0 -6,0 a 3 2 0 0 0 6,0 Z'
+    pop graphic-context
+    push graphic-context
+        # Body
+        path 'M 10,47 L 32,0 l 22,47 c -6,4 -38,4 -44,0 Z'
+    pop graphic-context
+    push graphic-context
+        # Eye/face
+        path 'M 26,24 c 4,3 8,3 12,0'
+    pop graphic-context
+    push graphic-context
+        # Arms
+        path 'M 24,32 l -4,8'
+        path 'M 40,32 l 4,12'
+    pop graphic-context
+    push graphic-context
+        # Fishing rod
+        path 'M 20,40 L 18,24'
+        # Line
+        path 'M 18,24 l -12,22'
+    pop graphic-context
+pop graphic-context
