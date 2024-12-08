@@ -9,7 +9,7 @@ local CAST_SPEED <const> = 200
 local hook;
 
 -- Logic to execute when the player sprite is updated
-local function playerUpdate(playerImage, castTable)
+local function playerUpdate(playerIdleTable, castTable)
     local castAnim = nil
     return function(self)
         -- If currently animating, exit immediately
@@ -43,7 +43,7 @@ local function playerUpdate(playerImage, castTable)
             -- Remove the hook
             hook:remove()
             -- Switch back to idle player image
-            self:setImage(playerImage)
+            self:setImage(playerIdleTable:getImage(1))
         end
 
         -- Move the player
@@ -65,11 +65,12 @@ local function playerUpdate(playerImage, castTable)
 end
 
 -- Create the player sprite, There should only be one created
-local function playerSprite(playerImage, x, y, castTable)
+local function playerSprite(playerIdleTable, x, y, castTable)
     hook = hookLib.hookSprite(nil, nil)
-    local sprite = playdate.graphics.sprite.new(playerImage)
+    -- TODO animate player idle
+    local sprite = playdate.graphics.sprite.new(playerIdleTable:getImage(1))
     sprite:moveTo(x, y)
-    sprite.update = playerUpdate(playerImage, castTable)
+    sprite.update = playerUpdate(playerIdleTable, castTable)
     -- TODO tweak rectangle to match visible player size
     sprite:setCollideRect(0, 0, sprite:getSize())
     return sprite

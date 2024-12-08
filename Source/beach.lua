@@ -4,7 +4,7 @@ import "CoreLibs/timer"
 -- Tag for the background sprite
 local BACKGROUND_TAG <const> = 0xFF
 -- Length of each frame in milliseconds
-local WAVE_SPEED <const> = 200
+local WAVE_SPEED <const> = 600
 -- Wave animation timer
 local waveAnim = nil
 -- Current slide of the wave animation
@@ -35,7 +35,7 @@ local function beachSprite(imgTable)
     waveAnim.repeats = true
 
     -- Make collision box to keep the player out of the water
-    sprite:setCollideRect(0, 0, 400, 120)
+    sprite:setCollideRect(0, 130, 400, 110)
 
     return sprite
 end

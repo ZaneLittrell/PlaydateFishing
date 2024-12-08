@@ -8,17 +8,17 @@ local pSprite <const> = playdate.graphics.sprite
 
 -- Load all assets
 local function loadAssets()
-    local waveTable = util.loadImagetable("Images/fullWave")
+    local beachTable = util.loadImagetable("Images/beach")
     local fishImage = util.loadImage("Images/fish")
-    local playerImage = util.loadImage("Images/player")
+    local playerIdleTable = util.loadImagetable("Images/player-idle")
     local castTable = util.loadImagetable("Images/cast")
     local lineImage = util.loadImage("Images/line")
     local lineMask = util.loadImage("Images/line-mask")
 
     return {
-        waveTable = waveTable,
+        beachTable = beachTable,
         fishImage = fishImage,
-        playerImage = playerImage,
+        playerIdleTable = playerIdleTable,
         castTable = castTable,
         lineImage = lineImage,
         lineMask = lineMask
@@ -27,7 +27,7 @@ end
 
 -- Make and add beach sprite
 local function initBeach(assets)
-    local beachSprite = beach.beachSprite(assets.waveTable)
+    local beachSprite = beach.beachSprite(assets.beachTable)
     beachSprite:add()
 end
 
@@ -41,7 +41,7 @@ local function initFish(assets)
         local sprite = fish.fishSprite(
             assets.fishImage,
             x,
-            i * 20,
+            i * 20 + 160,
             leftBound,
             rightBound,
             speed
@@ -53,9 +53,9 @@ end
 -- Make and add player sprite
 local function initPlayer(assets)
     local playerSprite = player.playerSprite(
-        assets.playerImage,
+        assets.playerIdleTable,
         192,
-        200,
+        80,
         assets.castTable
     )
     playerSprite:add()
