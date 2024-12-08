@@ -25,4 +25,10 @@ push graphic-context
         path 'M 24,36 l -4,12'
         path 'M 40,36 l 4,12'
     pop graphic-context
+    push graphic-context
+        # Fishing rod
+        path 'M 20,48 L 12,20'
+        # Line
+        path 'M 12,20 l 0,18'
+    pop graphic-context
 pop graphic-context
