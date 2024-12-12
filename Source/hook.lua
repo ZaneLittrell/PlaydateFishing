@@ -1,15 +1,21 @@
 import "CoreLibs/sprites"
 
--- Playdate graphics object
+--- Playdate graphics object
 local gfx <const> = playdate.graphics
 
+--- Width of the line image in px
 local LINE_IMAGE_WIDTH <const> = 64
+--- Height of the line image in px
 local LINE_IMAGE_HEIGHT <const> = 64
+--- Start x-coordinate of the line
 local LINE_IMAGE_X1 <const> = 11
+--- Width of the line in px
 local STROKE_WIDTH <const> = 3
 
--- Angle is in radians
--- Length is the length of the hypotenuse
+--- Draw the line and hook into an image
+---@param length integer # Length of the line in px
+---@param angle number # Angle of the line in radians
+---@return pd_image # Image of the line and hook
 local function drawHook(length, angle)
     if angle < 0 or angle > math.pi then
         error('Angle must be between 0 and π radians')
@@ -41,7 +47,9 @@ local function drawHook(length, angle)
     return hookImage
 end
 
-local function hookSprite(lineImage, lineMask)
+--- Create the sprite for the fishing line and hook
+---@return pd_sprite
+local function hookSprite()
     local sprite = gfx.sprite.new()
     --local maskedLine = lineImage:copy()
     --maskedLine:setMaskImage(lineMask)

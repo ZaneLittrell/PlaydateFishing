@@ -3,13 +3,9 @@
     "runtime": {
         "version": "Lua 5.4"
     },
-    "diagnostics": {
-        "globals": ["playdate"]
-    },
     "workspace": {
         "library": [
-            "/Users/zane.littrell/Developer/PlaydateSDK",
-            "/Users/zane.littrell/Developer/PlaydateSDK/CoreLibs"
+            "/home/zane/PlaydateSDK/PlaydateSDK-2.6.0/CoreLibs"
         ]
     },
     "runtime": {

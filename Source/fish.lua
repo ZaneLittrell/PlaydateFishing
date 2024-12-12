@@ -5,7 +5,11 @@ local FULL_TAG <const> = 0xFF
 -- Tag for the fish moving in the positive x direction
 local FISH_FORWARD_TAG <const> = 0x8
 
--- Fish update method
+--- Fish update method
+---@param leftBound integer
+---@param rightBound integer
+---@param speed integer 
+---@return function
 local function fishUpdate(leftBound, rightBound, speed)
     return function(self)
         if self.x > rightBound then
@@ -25,7 +29,14 @@ local function fishUpdate(leftBound, rightBound, speed)
     end
 end
 
--- Create a fish sprite
+--- Create a fish sprite
+---@param fishImage pd_image
+---@param x integer
+---@param y integer
+---@param leftBound integer
+---@param rightBound integer
+---@param speed integer
+---@return pd_sprite
 local function fishSprite(fishImage, x, y, leftBound, rightBound, speed)
     local sprite = playdate.graphics.sprite.new(fishImage)
     sprite:moveTo(x, y)

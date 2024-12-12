@@ -1,16 +1,20 @@
 import "CoreLibs/sprites"
 import "CoreLibs/timer"
 
--- Tag for the background sprite
+--- Tag for the background sprite
 local BACKGROUND_TAG <const> = 0xFF
--- Length of each frame in milliseconds
+--- Length of each frame in milliseconds
 local WAVE_SPEED <const> = 600
--- Wave animation timer
+--- Wave animation timer
+---@type pd_timer|nil
 local waveAnim = nil
--- Current slide of the wave animation
+--- Current slide of the wave animation
+---@type integer 
 local nextSlide = 0
 
--- Create the sprite for the beach background
+--- Create the sprite for the beach background
+---@param imgTable pd_imagetable
+---@return pd_sprite
 local function beachSprite(imgTable)
     local sprite = playdate.graphics.sprite.new()
     -- Set properties to fill the background and persist

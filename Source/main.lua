@@ -3,10 +3,13 @@ local fish = import "fish"
 local player = import "player"
 local util = import "util"
 
--- Playdate sprite object
+--- Playdate sprite object
 local pSprite <const> = playdate.graphics.sprite
 
--- Load all assets
+---@alias assetstable { beachTable: pd_imagetable, fishImage: pd_image, playerIdleTable: pd_imagetable, castTable: pd_imagetable, lineImage: pd_image, lineMask: pd_image }
+
+--- Load all assets
+---@return assetstable
 local function loadAssets()
     local beachTable = util.loadImagetable("Images/beach")
     local fishImage = util.loadImage("Images/fish")
@@ -25,13 +28,15 @@ local function loadAssets()
     }
 end
 
--- Make and add beach sprite
+--- Make and add beach sprite
+---@param assets assetstable
 local function initBeach(assets)
     local beachSprite = beach.beachSprite(assets.beachTable)
     beachSprite:add()
 end
 
--- Make and add fish sprites
+--- Make and add fish sprites
+--- @param assets assetstable
 local function initFish(assets)
     for i = 1, 3, 1 do
         local x = math.random(80, 320)
@@ -50,7 +55,8 @@ local function initFish(assets)
     end
 end
 
--- Make and add player sprite
+--- Make and add player sprite
+--- @param assets assetstable
 local function initPlayer(assets)
     local playerSprite = player.playerSprite(
         assets.playerIdleTable,
@@ -61,7 +67,7 @@ local function initPlayer(assets)
     playerSprite:add()
 end
 
--- Initialization function
+--- Initialization function
 local function init()
     local assets = loadAssets()
     initBeach(assets)
@@ -71,7 +77,6 @@ end
 
 --#region Playdate overrides
 
----@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
     pSprite.update()
     playdate.timer.updateTimers()

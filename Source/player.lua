@@ -2,19 +2,24 @@ import "CoreLibs/sprites"
 
 local hookLib = import "hook"
 
--- Length of each frame in milliseconds
+--- Length of each frame in milliseconds
 local CAST_SPEED <const> = 200
 -- Length of each frame in milliseconds
 local IDLE_SPEED <const> = 500
 
--- Sprite for the hook that the player casts
+--- Sprite for the hook that the player casts
+---@type pd_sprite
 local hook;
 -- Current slide index (0-based) for animation
+---@type integer
 local animSlide = 0;
 -- Animation timer for idle animation
+---@type pd_timer|nil
 local idleAnim = nil;
 
 -- Logic to execute when the player sprite is updated
+---@param playerIdleTable pd_imagetable
+---@param castTable pd_imagetable
 local function playerUpdate(playerIdleTable, castTable)
     local castAnim = nil
     return function(self)
@@ -25,13 +30,16 @@ local function playerUpdate(playerIdleTable, castTable)
 
         if playdate.buttonIsPressed(playdate.kButtonA) then
             -- Pause idle animation
-            idleAnim:pause()
+            if idleAnim then
+                idleAnim:pause()
+            end
             -- Draw cast animation
 
             local timerDuration = math.floor(CAST_SPEED * #castTable)
             -- Make value timer where the value is the frame of the image table
             castAnim = playdate.timer.new(timerDuration, 1, #castTable + 1)
             -- Animate each frame from the table
+            ---@diagnostic disable-next-line: redundant-parameter
             castAnim.updateCallback = function(timer)
                 local nextFrame = math.floor(timer.value)
                 self:setImage(castTable:getImage(nextFrame))
@@ -53,7 +61,10 @@ local function playerUpdate(playerIdleTable, castTable)
             -- Switch back to idle player animation
             self:setImage(playerIdleTable:getImage(1))
             animSlide = 0
-            idleAnim:start()
+
+            if idleAnim then
+                idleAnim:start()
+            end
         end
 
         -- Move the player
@@ -75,6 +86,11 @@ local function playerUpdate(playerIdleTable, castTable)
 end
 
 -- Create the player sprite, There should only be one created
+---@param playerIdleTable pd_imagetable
+---@param x integer
+---@param y integer
+---@param castTable pd_imagetable
+---@return pd_sprite
 local function playerSprite(playerIdleTable, x, y, castTable)
     hook = hookLib.hookSprite(nil, nil)
     local sprite = playdate.graphics.sprite.new(playerIdleTable:getImage(1))
