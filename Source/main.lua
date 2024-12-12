@@ -14,7 +14,7 @@ local function loadAssets()
     local beachTable = util.loadImagetable("Images/beach")
     local fishImage = util.loadImage("Images/fish")
     local playerIdleTable = util.loadImagetable("Images/player-idle")
-    local castTable = util.loadImagetable("Images/cast")
+    local castTable = util.loadImagetable("Images/player-cast")
     local lineImage = util.loadImage("Images/line")
     local lineMask = util.loadImage("Images/line-mask")
 
