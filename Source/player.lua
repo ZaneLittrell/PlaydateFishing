@@ -47,10 +47,10 @@ local function playerUpdate(playerIdleTable, castTable)
             -- Add the rest of the line that's been cast
             castAnim.timerEndedCallback = function ()
                 print('Adding hook sprite')
-                -- local hookImage = hookLib.drawHook(40, math.pi / 4)
-                -- hook:setImage(hookImage)
-                -- hook:moveTo(self.x, self.y - 64)
-                -- hook:add()
+                local hookImage = hookLib.drawHook(40, math.pi / 4)
+                hook:setImage(hookImage)
+                hook:moveTo(self.x, self.y - 64)
+                hook:add()
                 castAnim = nil
             end
         end

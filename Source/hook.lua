@@ -30,9 +30,6 @@ local function drawHook(length, angle)
 
     gfx.lockFocus(hookImage)
 
-    gfx.setColor(gfx.kColorBlack)
-    gfx.fillRect(0, 0, LINE_IMAGE_WIDTH, LINE_IMAGE_HEIGHT)
-
     gfx.setLineWidth(STROKE_WIDTH + 2)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)
     gfx.setColor(gfx.kColorWhite)
@@ -42,8 +39,8 @@ local function drawHook(length, angle)
     gfx.setColor(gfx.kColorBlack)
     gfx.drawLine(LINE_IMAGE_X1, LINE_IMAGE_HEIGHT, x2, y2)
 
-
     gfx.unlockFocus()
+
     return hookImage
 end
 
