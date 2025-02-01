@@ -6,7 +6,7 @@ This is my attempt at making a simple Playdate game with Lua. If this goes well,
 
 All image assets for this game are initially created as [Magick Vector Graphics (MVG)](https://imagemagick.org/script/magick-vector-graphics.php) files. This is a syntax, somewhat based off of the SVG format, which allows for defining the image in terms of vecotrs. The ImageMagick program can then be used to render these files into PNG files for use in the game.
 
-The scripts needed to rasterize these vector images are all contained in the Makefile under the `cector/` directory. After running the `make` scripts, the PNG files should be copied to the `Source/Images/` directory.
+The scripts needed to rasterize these vector images are all contained in the Makefile under the `vector/` directory. After running the `make` scripts, the PNG files should be copied to the `Source/Images/` directory.
 
 ## Linux Playdate Access
 
