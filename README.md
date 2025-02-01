@@ -4,9 +4,9 @@ This is my attempt at making a simple Playdate game with Lua. If this goes well,
 
 ## Images
 
-The X11 bitmap program is very simple, but easy to use for creating smaller images. Bitmaps should be created at 16x16 resolution and saved in the `bitmaps` directory. From there, running `magick bitmaps/source.xbm -magnify -magnify Source/Images/output.png` will create a more smoothed out version of that image at 64x64px resolution.
+All image assets for this game are initially created as [Magick Vector Graphics (MVG)](https://imagemagick.org/script/magick-vector-graphics.php) files. This is a syntax, somewhat based off of the SVG format, which allows for defining the image in terms of vecotrs. The ImageMagick program can then be used to render these files into PNG files for use in the game.
 
-Animations can be made by creating each slide as individual .xbm files and then stitching them together with `montage -mode concatenate animation-*.xbm animation-table-16-16.png`. That command will join all `animation-n.xbm` files into one `animation-table-16-16.png`.
+The scripts needed to rasterize these vector images are all contained in the Makefile under the `cector/` directory. After running the `make` scripts, the PNG files should be copied to the `Source/Images/` directory.
 
 ## Linux Playdate Access
 
